@@ -1,0 +1,1 @@
+## Automate mundane task with bash.
