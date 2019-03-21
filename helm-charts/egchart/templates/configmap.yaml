@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-configmap
+data:
+  myvalue: "Some config"
+  drink: {{ .Values.favourite.drink }}
+  food: {{ .Values.favourite.food }}
