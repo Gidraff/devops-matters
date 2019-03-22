@@ -4,5 +4,15 @@ metadata:
   name: {{ .Release.Name }}-configmap
 data:
   myvalue: "Some config"
-  drink: {{ .Values.favourite.drink | default "tea" | quote }}
-  food: {{ .Values.favourite.food | upper | quote }}
+  {{- with .Values.favourite }}
+  drink: {{ .drink | default "tea" | quote }}
+  food: {{ .food | upper | quote }}
+  {{- end }}
+  toppings: |-
+    {{- range .Values.pizzaToppings }}
+    - {{ . | title | quote }}
+    {{- end }}
+  sizes: |-
+    {{- range tuple "small" "medium" "large" }}
+    - {{ . }}
+    {{- end }}
