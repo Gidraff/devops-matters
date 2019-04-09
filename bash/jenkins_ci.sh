@@ -38,8 +38,23 @@ _install_jenkins() {
   sudo ufw allow 8080
 }
 
+_install_docker() {
+  sudo apt install docker.io
+  if [ $? -ne 0 ]; then
+    echo "Failed to install docker"
+    exit 1
+  else 
+    echo "Starting docker daemon"
+    sudo systemctl start docker
+    sudo systemctl enable docker
+  fi
+
+  # Add jenkins user to docker user group
+  sudo usermod -aG docker jenkins
+}
+
 main(){
   _setup
   _install_jenkins
+  _install_docker
 }
-
