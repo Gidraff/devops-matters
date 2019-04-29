@@ -1,0 +1,24 @@
+{
+  "variables": {
+    "aws_access_key": "{{env `ACCESS_KEY`}}",
+    "aws_secret_key": "{{env `SECRET_KEY`}}"
+  },
+  "builders": [
+    {
+      "type": "amazon-ebs",
+      "access_key": "{{user `aws_access_key`}}",
+      "secret_key": "{{user `aws_secret_key`}}",
+      "region": "us-east-1",
+      "source_ami": "ami-0565af6e282977273",
+      "instance_type": "t2.micro",
+      "ssh_username": "ubuntu",
+      "ami_name": "packer-python-{{timestamp}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "../provisioner/install_python.sh"
+    }
+  ]
+}
