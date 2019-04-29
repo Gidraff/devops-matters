@@ -5,16 +5,41 @@
   remote_user: ubuntu
   become: yes
   become_method: sudo
+
+  vars:
+   - MyMessage: "Welcome to ansible world!"
+
   tasks:
-    - name: "Install NGINX webserver"
-      apt: name={{ item }} state=present 
-      with_items:
-        - nginx
-    - name: Insert Index Page
-      template:
-        src: html-css/index.html
-        dest: /usr/share/nginx/html/index.html
-    - name: Ensure the nginx daemom has started
+    - name: "ensure nginx is at the latest version"
+      apt: name=nginx state=present
+      become: yes
+
+    - name: start nginx
       service: name=nginx state=started
       become: yes
       become_method: sudo
+
+    - name: copy the nginx condig file and restart nginx
+      copy: 
+        src: ./static_site.cfg
+        dest: /etc/nginx/sites-available/static_site.cfg
+      become: yes
+
+    - name: create symlink
+      file:
+        src: /etc/nginx/sites-available/static_site.cfg
+        dest: /etc/nginx/sites-enabled/default
+        state: link
+      become: yes
+
+    - name: copy the content of the web site
+      copy:
+        src: ./static-site-src/
+        dest: /home/ubuntu/static-site
+
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted
+      become: yes
+
