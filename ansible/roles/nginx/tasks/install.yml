@@ -1,0 +1,9 @@
+---
+- name: "ensure nginx is at the latest version"
+  apt: name=nginx state=present
+  become: yes
+
+- name: ensure nginx has started
+  service: name=nginx state=started
+  become: yes
+  become_method: sudo

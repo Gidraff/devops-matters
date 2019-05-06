@@ -37,9 +37,9 @@
         src: ./static-site-src/
         dest: /home/ubuntu/static-site
 
-    - name: restart nginx
+    
+- name: restart nginx
       service:
         name: nginx
         state: restarted
       become: yes
-
