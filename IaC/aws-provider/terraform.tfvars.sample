@@ -1,0 +1,6 @@
+# AWS CONFIG
+aws_access_key = "XXXXXXXXXXXXXXXXXXXXX"
+aws_secret_key = "XXXXXXXXXXXXXXXXXXXXX"
+aws_region     = "XXXXXXX"
+
+instance_ami = "ami-XXXXXXX"
