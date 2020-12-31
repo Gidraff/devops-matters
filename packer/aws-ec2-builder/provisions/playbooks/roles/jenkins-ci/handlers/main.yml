@@ -1,0 +1,20 @@
+---
+# handlers file for jenkins-ci
+# handlers file for nginx
+- name: Restart Docker
+  service:
+    name: docker
+    state: restarted
+  become: yes
+
+- name: Restart Jenkins
+  service: name=jenkins state=restarted
+
+- name: configure default users
+  template:
+    src: basic-security.groovy.j2
+    dest: "{{ jenkins_home }}/init.groovy.d/basic-security.groovy"
+    owner: "{{ jenkins_process_user }}"
+    group: "{{ jenkins_process_group }}"
+    mode: 0775
+  register: jenkins_users_config

@@ -1,0 +1,7 @@
+---
+# This Playbook would deploy nginx.
+
+- hosts: all
+  become: true
+  roles:
+    - role: "./roles/jenkins-ci"

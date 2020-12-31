@@ -1,0 +1,33 @@
+---
+# Java JDK
+- name: Ensure Java JDK is installed
+  apt: name=openjdk-11-jdk state=present
+
+- name: Install required system packages
+  apt: name={{ item }} state=latest update_cache=yes
+  loop: [ 'apt-transport-https', 'ca-certificates', 'curl', 'git', 'software-properties-common', 'python3-pip', 'virtualenv', 'python3-setuptools']
+
+- name: Add the Jenkins public GPG key to the apt repo
+  apt_key: 
+    url: "https://pkg.jenkins.io/debian/jenkins.io.key"
+    state: present
+
+- name: Add Jenkins apt repo to the trusted sources list
+  apt_repository: 
+    repo: "deb http://pkg.jenkins.io/debian-stable binary/"
+    state: present
+    update_cache: true
+
+- name: Update apt-get repo and install jenkins
+  apt: update_cache=yes name=jenkins state=latest
+  notify: Restart Jenkins
+
+- name: Add Jenkins user to docker group
+  user:
+    name: jenkins
+    groups: docker
+  notify: Restart Jenkins
+
+- name: Printing all the environment​ variables in Ansible
+  debug:
+    msg: "{{ ansible_env }}"

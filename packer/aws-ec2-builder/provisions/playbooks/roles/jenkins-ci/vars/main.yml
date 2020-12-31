@@ -1,0 +1,50 @@
+---
+# vars file for jenkins-ci
+download_folder: "{{ JENKINS_HOME }}"
+JENKINS_HOME: "{{ ansible_env.HOME }}/jenkins-home"
+
+# docker vars
+create_containers: 4
+default_container_name: docker
+default_container_image: ubuntu
+default_container_command: sleep 1d
+
+# Jenkins vars
+jenkins_init_file: /etc/default/jenkins
+jenkins_http_port_param: HTTP_PORT
+jenkins_java_options_env_var: JAVA_ARGS
+
+jenkins_groovy_scripts: 
+  - basic-security.groovy
+  - config-maven.groovy
+  - disable-cli.groovy
+  - harden-jenkins.groovy
+
+jenkins_plugins:
+  - blueocean-bitbucket-pipeline.hpi        
+  - blueocean-executor-info.hpi             
+  - blueocean.hpi
+  - github-api.hpi
+  - blueocean-commons.hpi                   
+  - blueocean-git-pipeline.hpi              
+  - codedeploy.hpi                          
+  - matrix-auth.hpi
+  - blueocean-config.hpi                    
+  - blueocean-github-pipeline.hpi           
+  - credentials.hpi                         
+  - matrix-project.hpi
+  - blueocean-core-js.hpi                   
+  - blueocean-jira.hpi                      
+  - git-client.hpi                          
+  - maven-plugin.hpi
+  - blueocean-dashboard.hpi                 
+  - blueocean-jwt.hpi                       
+  - git-server.hpi                          
+  - slack.hpi
+  - blueocean-display-url.hpi               
+  - blueocean-rest.hpi                      
+  - git.hpi                                 
+  - sonar.hpi
+  - blueocean-events.hpi                    
+  - blueocean-web.hpi                       
+  - gitflow.hpi

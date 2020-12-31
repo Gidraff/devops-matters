@@ -1,0 +1,6 @@
+---
+# tasks file for jenkins-ci
+- import_tasks: install_docker.yml
+- import_tasks: install_jenkins.yml
+- import_tasks: settings.yml
+- import_tasks: service.yml

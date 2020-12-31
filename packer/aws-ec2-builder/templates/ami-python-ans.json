@@ -18,7 +18,7 @@
   "provisioners": [
     {
       "type": "shell",
-      "script": "../provisioner/install_python.sh"
+      "script": "../provisions/bash/install_python.sh"
     }
   ]
 }
