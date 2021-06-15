@@ -8,18 +8,15 @@
 ## 192.X.X.X
 
 # Ex 2: A collection of hosts belonging to the 'webservers' group
-# [webservers]
-# 52.90.255.139
-# 3.85.95.169
-5 2.23.155.38
+[webservers]
+18.X.X.X
 
 
-
-# [webservers:vars]
-# ansible_connection=ssh
-# ansible_ssh_user=ubuntu
-# ansible_python_interpreter=/usr/bin/python2.7
-# ansible_ssh_private_key_file=/Users/gidraff/.ssh/jenkins_key.pem
+[webservers:vars]
+ansible_connection=ssh
+ansible_ssh_user=ubuntu
+ansible_python_interpreter=/usr/bin/python2.7
+ansible_ssh_private_key_file=$HOME/.ssh/<keyname>.pem
 
 
 # If you have multiple hosts following a pattern you can specify
@@ -27,12 +24,9 @@
 # Ex 3: A collection of database servers in the 'dbservers' group
 
 ## [dbservers]
-## 
+##
 ## db01.intranet.mydomain.net
 ## db02.intranet.mydomain.net
 
 
-[targets]
-localhost  ansible_connection=local
-# Here's another example of host ranges, this time there are no leading 0s:
 ## db-[99:101]-node.example.com

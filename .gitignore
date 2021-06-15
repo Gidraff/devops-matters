@@ -3,5 +3,4 @@
 *.tfstate.*
 .terraform/
 settings.json
-.vagrant/
-*.lock.*
+*.db
