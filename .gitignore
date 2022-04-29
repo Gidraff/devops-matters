@@ -4,3 +4,4 @@
 .terraform/
 settings.json
 *.db
+.DS_Store
