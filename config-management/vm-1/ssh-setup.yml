@@ -1,0 +1,14 @@
+---
+- name: Setup VM
+  hosts: all
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  tasks:
+    - name: Ensure SSH directory exists
+      file:
+        path: /home/vagrant/.ssh
+        state: directory
+        owner: vagrant
+        group: vagrant
+        mode: '0700'

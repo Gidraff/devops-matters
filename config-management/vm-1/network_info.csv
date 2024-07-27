@@ -1,0 +1,4 @@
+Interface,MTU,Speed,Duplex,IPv4 Address,IPv6 Address
+lo,65536,0,0,127.0.0.1,::1
+wlan0,1500,0,0,192.168.86.27,fe80::f277:c3ff:fe74:cb60%wlan0
+vboxnet0,1500,10,2,192.168.56.1,fe80::800:27ff:fe00:0%vboxnet0

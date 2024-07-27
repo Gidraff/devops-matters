@@ -6,3 +6,4 @@ settings.json
 *.db
 .DS_Store
 .vagrant/
+*/*/ansible-env/
