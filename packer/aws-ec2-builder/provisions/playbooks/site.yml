@@ -4,4 +4,4 @@
 - hosts: all
   become: true
   roles:
-    - role: "./roles/jenkins-ci"
+    - role: "./roles/nginx"

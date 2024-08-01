@@ -1,0 +1,15 @@
+---
+- name: Ensure SSH agent is running
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install SSH agent
+      apt: 
+        name: openssh-client
+        state: present
+
+    - name: Ensure SSH agent is running
+      shell: |
+        if ! pgrep -x "ssh-agent" > /dev/null; then
+          eval "$(ssh-agent -s)"
+        fi

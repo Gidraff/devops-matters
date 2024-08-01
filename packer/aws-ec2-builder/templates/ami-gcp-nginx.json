@@ -1,0 +1,54 @@
+{
+    "variables": {
+        "gcp_account_file": "{{ env `GOOGLE_APPLICATION_CREDENTIALS`}}",
+        "ssh_public_key_file": "{{ env `SSH_PUBLIC_KEY_FILE` }}",
+        "ssh_private_key_file": "{{ env `SSH_PRIVATE_KEY_FILE` }}"
+    },
+    "builders": [
+        {
+            "type": "googlecompute",
+            "project_id": "precise-clock-427005-i8",
+            "zone": "us-central1-a",
+            "image_name": "nginx-image-{{timestamp}}",
+            "machine_type": "e2-small",
+            "ssh_username": "packer",
+            "source_image_family": "ubuntu-2004-lts",
+            "credentials_file": "{{ user `gcp_account_file` }}"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sudo apt-get update",
+                "sudo apt-get install -y python3 python3-pip"
+            ]
+        },
+        {
+            "type": "file",
+            "source": "{{ user `ssh_public_key_file` }}",
+            "destination": "/tmp/packer.pub"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo mkdir -p /home/packer/.ssh",
+                "sudo mv /tmp/packer.pub /home/packer/.ssh/authorized_keys",
+                "sudo chown -R packer:packer /home/packer/.ssh",
+                "sudo chmod 700 /home/packer/.ssh",
+                "sudo chmod 644 /home/packer/.ssh/authorized_keys"
+            ]
+        },
+        {
+            "type": "ansible",
+            "playbook_file": "../provisions/playbooks/site.yml",
+            "extra_arguments": [
+                "--extra-vars",
+                "ansible_python_interpreter=/usr/bin/python3",
+                "-e",
+                "ansible_ssh_extra_args='-o HostKeyAlgorithms=+ssh-rsa'", 
+                "-e", "ansible_remote_tmp=/tmp/ansible/"
+            ]
+        }
+    ]
+}
