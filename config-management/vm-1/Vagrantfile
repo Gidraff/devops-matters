@@ -7,14 +7,14 @@
 # you're doing.
 Vagrant.configure("2") do |config|
 
-  config.vm.define "server1" do |server1|
-    server1.vm.box = "ubuntu/xenial64"
-    server1.vm.hostname = "server1"
-    server1.vm.network "private_network", ip: "192.168.56.10"
-    server1.vm.provider "virtualbox" do |vb|
-      vb.memory = "512"
-    end
-  end
+  # config.vm.define "server1" do |server1|
+  #   server1.vm.box = "ubuntu/xenial64"
+  #   server1.vm.hostname = "server1"
+  #   server1.vm.network "private_network", ip: "192.168.56.10"
+  #   server1.vm.provider "virtualbox" do |vb|
+  #     vb.memory = "512"
+  #   end
+  # end
 
   config.vm.define "server2" do |server2|
     server2.vm.box = "ubuntu/xenial64"
@@ -41,6 +41,20 @@ Vagrant.configure("2") do |config|
     workstation.vm.provider "virtualbox" do |vb|
       vb.memory = "512"
     end
+
+    # workstation.vm.provision "shell", inline: <<-SHELL
+    #   sudo apt-get update
+    #   sudo apt-get install -y selinux-basics selinux-policy-default auditd
+    #   sudo selinux-activate
+    #   # sudo selinux-config-permissive
+    #   # sudo reboot
+    # SHELL
+
+    # workstation.vm.provision "shell", inline: <<-SHELL, run: "always"
+    #   sudo grep sshd /var/log/audit/audit.log | audit2allow -M myssh
+    #   sudo semodule -i myssh.pp
+      # sudo selinux-config-enforcing
+    # SHELL
   end
 
   # config.vm.box = "ubuntu/xenial64"
@@ -74,7 +88,7 @@ Vagrant.configure("2") do |config|
   #   vb.cpus = 2
   # end
 
-  config.vm.provision "ansible_local" do |ansible|
-    ansible.playbook = "ssh-setup.yml"
-  end
+  # config.vm.provision "ansible_local" do |ansible|
+  #   ansible.playbook = "ssh-setup.yml"
+  # end
 end

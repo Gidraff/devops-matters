@@ -1,0 +1,8 @@
+/etc/exim4/passwd.client
+/etc/pam.d/passwd
+/etc/pam.d/chpasswd
+/etc/passwd-
+/etc/alternatives/vncpasswd.1.gz
+/etc/alternatives/vncpasswd
+/etc/security/opasswd
+/etc/passwd
