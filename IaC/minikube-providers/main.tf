@@ -1,12 +1,12 @@
 resource "kubernetes_namespace" "web-test" {
   metadata {
-    name = "web-test"
+    name = var.namespace
   }
 }
 
 resource "kubernetes_deployment" "nginx" {
   metadata {
-    name      = "nginx"
+    name      = var.name
     namespace = kubernetes_namespace.web-test.metadata.0.name
   }
 
@@ -14,21 +14,21 @@ resource "kubernetes_deployment" "nginx" {
     replicas = 2
     selector {
       match_labels = {
-        app = "nginx"
+        app = var.metadata_name
       }
     }
     template {
       metadata {
         labels = {
-          app = "nginx"
+          app = var.metadata_name
         }
       }
       spec {
         container {
-          image = "nginx"
-          name  = "nginx"
+          image = var.image_name
+          name  = var.container_name
           port {
-            container_port = 80
+            container_port = var.nginx_ports
           }
         }
       }
@@ -38,7 +38,7 @@ resource "kubernetes_deployment" "nginx" {
 
 resource "kubernetes_service" "nginx" {
   metadata {
-    name      = "nginx"
+    name      = var.metadata_name
     namespace = kubernetes_namespace.web-test.metadata.0.name
   }
   spec {
@@ -46,7 +46,7 @@ resource "kubernetes_service" "nginx" {
       app = kubernetes_deployment.nginx.spec.0.template.0.metadata.0.labels.app
     }
     port {
-      port = 80
+      port = var.nginx_ports
     }
   }
 }
